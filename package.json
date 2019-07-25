@@ -1,0 +1,35 @@
+{
+  "name": "evaluatz-api",
+  "version": "1.0.0",
+  "description": "API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "node ./bin/www dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evaluatz/api.git"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "delay": "^4.2.0",
+    "ejs": "~2.5.7",
+    "express": "~4.16.0",
+    "firebase": "^5.11.1",
+    "google-images": "^2.1.0",
+    "http-errors": "~1.6.2",
+    "morgan": "~1.9.0",
+    "pg": "^7.10.0",
+    "unzip": "^0.1.11"
+  },
+  "author": "GNG",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evaluatz/api/issues"
+  },
+  "homepage": "https://github.com/evaluatz/api#readme"
+}

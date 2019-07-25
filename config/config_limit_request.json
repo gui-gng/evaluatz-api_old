@@ -1,0 +1,43 @@
+[
+    {
+        "active": false,
+        "source": "ebay_api",
+        "api_key": "v^1.1#i^1#f^0#p^3#r^0#I^3#t^H4sIAAAAAAAAAOVYW2wUVRjubreVUosXSGkaMMsUGkRn98zOzM7OSDdZeqGNtF26bRUQ4ezMme3Q2ZnNzGzbNRhKUURCSYNGEhUpEhWQmBA1BHzAhAQxXkBMNUHRhCeICg8gGNHgme1tWxFoy8Mm7stm/vPfvu///3PODOjOL1i0uXbz9SLHfc7+btDtdDioQlCQn/fYjFxnaV4OyFBw9HfP73b15F5YbMK4mhCakJnQNRO5u+KqZgppYQWRNDRBh6ZiChqMI1OwRCESql8m+DxASBi6pYu6SrjrqioIMYAoBKgAy/E8H5VlLNWGfTbrFQSiJD+KRiENWZblWAqvm2YS1WmmBTWrgvABiicBQ/q4ZsAKNC1Qfg/NgpWEuxUZpqJrWMUDiGA6XSFta2TkevtUoWkiw8JOiGBdqCbSGKqrqm5oXuzN8BUc4iFiQStpjn2q1CXkboVqEt0+jJnWFiJJUUSmSXiDgxHGOhVCw8lMIv001VAEDOA54IcABThWuidU1uhGHFq3z8OWKBIpp1UFpFmKlboTo5iN6DokWkNPDdhFXZXb/luehKoiK8ioIKqXhFa0RKqbCHckHDb0DkVCko2U4rgAxftohiaCsaSixnRNJCn/UJhBX0Mkj4tTqWuSYlNmuht0awnCOaPxzPgymMFKjVqjEZItO59MPW6YQYZbaZd0sIZJq02zq4rimAZ3+vHO/A83xGgL3KuW4HwM6/fTgGXFKMvTzC1awp71CbdF0K5MKBz22rmgKEyRcWi0IyuhQhGRIqY3GUeGIgk0K/vogIxIyc/LJMPLMhllJT9JyQgBhAdf5AP/n+6wLEOJJi000iHjF9IQ8aaIGRUUKAuW3o605lQCEeM109vOUFt0mRVEm2UlBK+3s7PT00l7dCPm9QFAeZ+uXxYR21AcEiO6yp2VSSXdICLCVqYiWDiBCqIL9x8OrsWIYFN1TVN1pHZNc+OT1Q3DvTsms+B46X8gjYh6AoV1VRFT2QWRNqQwNKxUBKkqFkwJpGmDzAZ49qyPQrR9mNgJTCgeu+M8oh736hDvWbZoTTpr990oeU1MkmdwB8CePQaCkq6pqckYT8BG0TrwCOlGajIBR4wnYANFUU9q1mTCDZlOwEJOqrKiqvYuMZmAGeYTSVODaspSRHMk5JQaP5RI1MXjSQtGVVQnZcMEZAw4T+HTccrwsgzVUnzetSEjTlbbs96BU4HWc2S4qYqECEJW5P0UPqICPkqiwZSw18eULINOBZgAzQGODwAwtbpWoY5sqysjAQ5QcpQUfSxNMsjPkLw/ECUDUY5CNMPTAVqeEuZKVcFbRfZdNWp100LS1KDhG3F2gbLncXgcJd7Pk9DPAJKhohIZxXNKirLsv1vItsDF3fpy+a+3Cu/Yl/pgTvpH9Tg+Bj2OQ06HA3jBAqoMzMvPbXHl3l9qKhby4Iuox1RiGn5XNZCnHaUSUDGc+Q5lx5mXBjI+I/SvBiUjHxIKcqnCjK8KYM7oSh71wOwiigeMjwMsTVP+laBsdNVFFbtmtaKwrM0purn3Kc+lF6K/3/zij9UIFI0oORx5Oa4eR07br7N/eOS7K8JD5VdurNh14kTpVzOPDqA9FwqPlh3Z3td1buOsDX3NvSev1R+PPX/9++TV9XtnbIu9Ftl1esPx+eVzv37v7CftcEt4z+m+RUW/SDmv9G/88tSONbvNvGPnUKz83fVXr83Zv2rXxTM1nwYXrFjQnX9+7eXmlu1GzreXXcU3nbM2ndz5RsHCz8qnv9/w8KHDf4WeKH7x558qn7kRzn+8d3nrjIunSi5t6Q2W7HRO8xx4dH/8nVVc58FNM+e99aardvvfB6fl3ijt/aYwt2Rr39wDxz5/8MO3ndcGEldaA2vriz6avrTs/KtFfx4mfxwInN337Lrfjhx4/RJVvG/3EUdL08IPjLXbXk4lFnGD5fsHUgIXL+ARAAA=",
+        "legacy_api_key": "Guilherm-Evaluatz-PRD-aeaa5c961-04821d30",
+        "delay_restart": 24,
+        "limit_req": 5000,
+        "delay_per_request": 1000
+    },
+    {
+        "active": false,
+        "source": "google_images_api",
+        "api_key": ["000798668743927189953:tlm_d7qkqde", "AIzaSyAXt7-S_qGf84z6Vl-gRdwEjIuxZlm5Xjg"],
+        "delay_restart": 24,
+        "limit_req": 10,
+        "delay_per_request":1000
+    },
+    {
+        "active": false,
+        "source": "carsales",
+        "api_key": "",
+        "delay_restart": 24,
+        "limit_req": 1000,
+        "delay_per_request":10000
+    },
+    {
+        "active": false,
+        "source": "gumtree",
+        "api_key": "",
+        "delay_restart": 24,
+        "limit_req": 1000,
+        "delay_per_request":10000
+    },
+    {
+        "active": true,
+        "source": "stocks_asx",
+        "api_key": null,
+        "delay_restart": 24,
+        "limit_req": null,
+        "delay_per_request":null
+    }
+]
