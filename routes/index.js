@@ -4,7 +4,7 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.set("Cached-Control","public, max-age=300, s-maxage-600");
-  res.render('index', { header:'partials/navbar',page: 'partials/list_aplications' });
+  res.send("Evaluatz api version: 1.0.0");
 });
 
 

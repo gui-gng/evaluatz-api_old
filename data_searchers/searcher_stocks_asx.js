@@ -47,7 +47,6 @@ module.exports = {
   }
 
   async function updateOffline(){
-  
     let path = Path.resolve(__dirname, '../', 'storage', 'stocks_asx_historic');
     let dirStocks = getDirectories(path);
     dirStocks.forEach(async src => await updateDatabase(src));
@@ -111,8 +110,7 @@ module.exports = {
                      stock_csv_split[6],
                  ];
                 // console.log(values);
-                 await stocks.insertHistoric(values[0], values[1], values[2], values[3], values[4], values[5], values[6])
-
+                 await stocks.insertHistoric(values[0], values[1], values[2], values[3], values[4], values[5], values[6]);
              }
          }
      }
