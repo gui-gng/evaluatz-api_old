@@ -7,6 +7,13 @@ const Axios = require("axios");
 require('../Utils');
 
 const stocks = require('../DAO/stocks');
+
+
+//AUX FUNCTIONS
+const getDirectories = source =>
+    Fs.readdirSync(source, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name);
  
 module.exports = {
     setConfig: async (config) => {
@@ -34,17 +41,25 @@ module.exports = {
         await unzipFile(formatedDate);
         await delay(1000);
         console.log("=======>Start update");
-
         await updateDatabase(formatedDate);
     }
+    await updateOffline();
+  }
+
+  async function updateOffline(){
+  
+    let path = Path.resolve(__dirname, '../', 'storage', 'stocks_asx_historic');
+    let dirStocks = getDirectories(path);
+    dirStocks.forEach(async src => await updateDatabase(src));
   }
 
   async function downloadHistoricData(formatedDate){
+        console.log("Downloading stock asx file: " + formatedDate);
         let url = 'https://www.asxhistoricaldata.com/data/' + formatedDate + ".zip";
         let path = Path.resolve(__dirname, '../', 'storage', 'stocks_asx_historic', formatedDate + '.zip');
-         let writer = Fs.createWriteStream(path);
+        let writer = Fs.createWriteStream(path);
 
-         let response = await Axios({
+        let response = await Axios({
           url,
           method: 'GET',
           responseType: 'stream'

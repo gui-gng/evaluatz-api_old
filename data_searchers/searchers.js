@@ -17,6 +17,7 @@ module.exports = {
                 delay_per_request:_config.delay_per_request
             };
             await eval(_config.source).setConfig(objConfig);
+            console.log("Starting searcher: " + _config.source);
             eval(_config.source).start();
         }
     }

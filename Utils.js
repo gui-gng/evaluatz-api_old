@@ -7,3 +7,5 @@ String.prototype.replaceAll = function(search, replacement) {
 Date.prototype.formatISO = function() {
     return this.toISOString().replace("T", " ").replace("Z","")
 };
+
+

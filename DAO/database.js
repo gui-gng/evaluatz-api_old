@@ -1,7 +1,7 @@
 const { Pool } = require('pg')
 
 
-
+console.log("Connecting database: " + (global.evaluatz_is_dev ? "DEV" : "PROD"));
 
 if (global.evaluatz_is_dev) {
   module.exports = {
