@@ -25,7 +25,12 @@ module.exports = {
     },
     start: async () => {
       let delay_restart_ms = delay_restart * 60 * 60 * 1000;
-      await getHistoricData();
+      try{
+        await getHistoricData();
+      }catch(e){
+        console.log("Error to update file");
+      }
+      
       setInterval(async () => await getHistoricData(), delay_restart_ms);
     }
   }
@@ -43,7 +48,7 @@ module.exports = {
         console.log("=======>Start update");
         await updateDatabase(formatedDate);
     }
-    await updateOffline();
+    // await updateOffline();
   }
 
   async function updateOffline(){
