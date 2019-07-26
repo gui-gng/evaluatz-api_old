@@ -9,8 +9,8 @@ router.get('/', function(req, res, next) {
 
 
 // router.get('/.well-known/acme-challenge/Gx4wF2JxmMCdWcnHWVlFtp29NihWv_C3a_DYmBLJyek', function(req, res, next) {
-//   // res.sendFile(__dirname + '/check.txt');
-//   res.json("Gx4wF2JxmMCdWcnHWVlFtp29NihWv_C3a_DYmBLJyek.BwH2qjkfaiWpwgw204U1AyNUfbcmYUSH_0b6VWRZqtI");
+//  res.sendFile(__dirname + '/check.txt');
+//  res.json("Gx4wF2JxmMCdWcnHWVlFtp29NihWv_C3a_DYmBLJyek.BwH2qjkfaiWpwgw204U1AyNUfbcmYUSH_0b6VWRZqtI");
 // });
 
 module.exports = router;
