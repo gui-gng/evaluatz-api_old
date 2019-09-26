@@ -30,6 +30,7 @@ module.exports = {
   createPool: () => new Pool(dbConfig),
   execute: async function (pool, sqlQuery, values){
     return new Promise(resolve => {
+       let rowsReturn = [];
         pool.connect()
         .then(client => {
             return client.query(sqlQuery, values)
@@ -38,6 +39,7 @@ module.exports = {
                 client.release();
             })
             .catch(e => {
+                console.log(e);
                 client.release();
             })
             .then(() => resolve(rowsReturn));

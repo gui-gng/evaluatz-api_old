@@ -33,7 +33,7 @@
         "delay_per_request":10000
     },
     {
-        "active": true,
+        "active": false,
         "source": "stocks_asx",
         "api_key": null,
         "delay_restart": 24,

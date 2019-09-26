@@ -4,11 +4,11 @@ const saltRounds = 10;
 
 
 module.exports = {
-    auth: async (username, password) => auth(username, password),
-    upsertUser: async (username, firstname, lastname, email, password) => await upsertUser(username, firstname, lastname, email, password)
+    auth: async (username, password, callback) =>  await auth(username, password, callback),
+    upsertUser: async (username, firstname, lastname, email, password, callback) => await upsertUser(username, firstname, lastname, email, password, callback)
 }
 
-async function upsertUser(username, firstname, lastname, email, password) {
+async function upsertUser(username, firstname, lastname, email, password, callback) {
 
     let response = { isSuccess: false, errors: [] };
 
@@ -36,26 +36,34 @@ async function upsertUser(username, firstname, lastname, email, password) {
         return response;
     }
 
-    bcrypt.hash(myPlaintextPassword, saltRounds, function (err, hash) {
-        return {
+    bcrypt.hash(password, saltRounds, async function (err, hash) {
+        await userDB.upsertUser(username, firstname, lastname, email, hash, 1);
+        let userAuth = (await userDB.getUserUsernameEmail(username));
+        callback({
             isSuccess: true,
-            user: userDB.upsertUser(username, firstname, lastname, email, hash, 1)
-        };
+            user: userAuth
+        });
     });
-
-
-
-
-
 }
 
 
-async function auth(username, password) {
-    let userAuth = userDB.getUserUsernameEmail(username);
+async function auth(username, password, callback) {
+    if(!username || !password){
+        return { isSuccess: false, errors: [{ field: "Login", msg: "Empty fields" }] }
+    }
+    let userAuth = (await userDB.getUserUsernameEmail(username))[0];
+    
+    if(!userAuth || !userAuth.password){
+        return { isSuccess: false, errors: [{ field: "Login", msg: "Invalid email or password" }] }
+    }
+
     bcrypt.compare(password, userAuth.password, function (err, res) {
-        // res == true
         if (res) {
-            return userAuth;
+            callback(userAuth);
+        }
+        else
+        {
+            callback({isSuccess: false, errors: [{ field: "Login", msg: "Invalid email or password" }]});
         }
     });
 }

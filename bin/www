@@ -21,8 +21,6 @@ const readPkg = require('read-pkg');
 
 const searchers = require("../data_searchers/searchers")
 
-
-
 global.package = readPkg.sync();
 
 
