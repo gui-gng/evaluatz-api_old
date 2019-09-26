@@ -13,7 +13,6 @@ const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const signupRouter = require('./routes/signup');
 
-
 var app = express();
 
 // // view engine setup
