@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 //AUTH
-const token = require("../auth/token");
+// const token = require("../auth/token");
 const classic = require("../auth/classic");
 const github = require("../auth/github");
 const google = require("../auth/google");
@@ -23,7 +23,8 @@ router.get('/classic', async function (req, res, next) {
                 subject: userReturn.email, 
                 audience: userReturn.username // this should be provided by client
             }
-            res.send(token.sign({data:"test"}, sOptions));
+            // res.send(token.sign({data:"test"}, sOptions));
+            res.send("");
         });   
     }
 });
