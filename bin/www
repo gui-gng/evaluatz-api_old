@@ -12,12 +12,19 @@ if(evaluatz_is_dev){
 /**
  * Module dependencies.
  */
-
+require("dotenv").config();
 const app = require('../app');
 const debug = require('debug')('page:server');
 const http = require('http');
 const fs = require("fs");
+const readPkg = require('read-pkg');
+
 const searchers = require("../data_searchers/searchers")
+
+
+
+global.package = readPkg.sync();
+
 
 
 //Start Searchers for cars

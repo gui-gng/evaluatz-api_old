@@ -9,16 +9,13 @@ const logger = require('morgan');
  * IMPORTING ROUTES
  */
 const indexRouter = require('./routes/index');
-const stocksRouter = require('./routes/stocks');
-const carsRouter = require('./routes/cars');
-const api = require('./routes/api');
-const login = require('./routes/login');
+const authRouter = require('./routes/stocks');
 
 var app = express();
 
 // // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -30,10 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  * Add routes
  */
 app.use('/'       , indexRouter);
-app.use('/stocks' , stocksRouter);
-app.use('/cars'   , carsRouter);
-app.use("/api"    , api);
-app.use("/login"    , login);
+app.use('/auth' , authRouter);
 
 
 // catch 404 and forward to error handler
@@ -49,7 +43,8 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send(err);
+  // res.render('error');
 });
 
 module.exports = app;

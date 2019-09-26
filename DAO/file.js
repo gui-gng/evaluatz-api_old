@@ -72,7 +72,7 @@ async function getPath(){
     return new Promise(resolve => {
         let sqlQuery = "SELECT * FROM public.path";
         let values = [];
-        resolve(execute(sqlQuery, values));
+        resolve(db.execute(pool, sqlQuery, values));
     });
 }
 /**
@@ -83,7 +83,7 @@ async function getPathByName(path_name){
     return new Promise(resolve => {
         let sqlQuery = "SELECT * FROM public.path where path=$1";
         let values = [path_name];
-        resolve(execute(sqlQuery, values));
+        resolve(db.execute(pool, sqlQuery, values));
     });
 }
 
@@ -113,7 +113,7 @@ async function insertPath(path_name){
     return new Promise(resolve => {
         let sqlQuery = "INSERT INTO public.path(path_description_id, path) VALUES ($1, $2)";
         let values = [path_description_id, path_name];
-        resolve(execute(sqlQuery, values));
+        resolve(db.execute(pool, sqlQuery, values));
     });
 }
 
@@ -136,7 +136,7 @@ async function getPathType(path_type){
             values = [path_type];
         }
         
-        resolve(execute(text, values));
+        resolve(db.execute(pool, text, values));
     });
 }
 /**
@@ -148,7 +148,7 @@ async function insertPathType(path_type){
     return new Promise(resolve => {
         let text = "SELECT * FROM public.path_type where path_type = $1";
         let values = [path_type];
-        resolve(execute(text, values));
+        resolve(db.execute(pool, text, values));
     });
 }
 
@@ -172,7 +172,7 @@ async function insertFile(file_id_path, file_is_local, file_link, file_type, fil
     return new Promise(resolve => {
         let text = 'INSERT INTO public.files(file_id_path, file_is_local, file_link, file_type, file_source) VALUES ($1, $2, $3, $4, $5)'
         let values = [file_id_path, file_is_local, file_link, file_type, file_source]
-        resolve(execute(text, values));
+        resolve(db.execute(pool, text, values));
     });
 }
 
@@ -193,7 +193,7 @@ async function getPathDescriptionType(path_type, path_level){
         values = [path_type, path_level];
     }
     return new Promise(resolve => {
-        resolve(execute(text, values));
+        resolve(db.execute(pool, text, values));
     });
 }
 async function getFilePath(path_name){
@@ -204,30 +204,9 @@ async function getFilePath(path_name){
             sqlQuery = sqlQuery + " where path = $1"
             values = [path_name]
         }
-        resolve(execute(sqlQuery, values));
+        resolve(db.execute(pool, sqlQuery, values));
     });
 }
 
-//=============================================================
-//=========================AUXILIAR============================
-//=============================================================
-async function execute(sqlQuery, values){
-    let rowsReturn = [];
-    return new Promise(resolve => {
-        pool.connect()
-        .then(client => {
-            return client.query(sqlQuery, values)
-            .then(res => {
-                rowsReturn = res.rows;
-                client.release();
-            })
-            .catch(e => {
-                client.release();
-                // console.error(e.stack);
-            })
-            .then(() => resolve(rowsReturn));
-        });
-    });
-}
 
 
