@@ -9,6 +9,16 @@ const github = require("../auth/github");
 const google = require("../auth/google");
 
 
+router.get('/', function (req, res, next) {
+    res.set("Cached-Control", "public, max-age=300, s-maxage-600");
+    sOptions = {
+        issuer: req.ip,
+        subject: req.query.email, 
+        audience: req.query.email 
+    }
+    res.send(token.verify(req.query.code, sOptions));
+});
+
 /* GET home page. */
 router.get('/classic', async function (req, res, next) {
     res.set("Cached-Control", "public, max-age=300, s-maxage-600");
@@ -21,7 +31,7 @@ router.get('/classic', async function (req, res, next) {
             sOptions = {
                 issuer: req.ip,
                 subject: userReturn.email, 
-                audience: userReturn.username 
+                audience: userReturn.email 
             }
             res.send(token.sign({data:"test"}, sOptions));
         });   
