@@ -8,13 +8,12 @@ const classic = require("../auth/classic");
 const github = require("../auth/github");
 const google = require("../auth/google");
 
-
 router.get('/', function (req, res, next) {
     res.set("Cached-Control", "public, max-age=300, s-maxage-600");
     sOptions = {
         issuer: req.ip,
-        subject: req.query.email, 
-        audience: req.query.email 
+        subject: req.query.email,
+        audience: req.query.email
     }
     res.send(token.verify(req.query.code, sOptions));
 });
@@ -27,14 +26,14 @@ router.get('/classic', async function (req, res, next) {
     } else {
         let username = req.query.username;
         let password = req.query.password;
-        classic.auth(username, password, function(userReturn){
+        classic.auth(username, password, function (userReturn) {
             sOptions = {
                 issuer: req.ip,
-                subject: userReturn.email, 
-                audience: userReturn.email 
+                subject: userReturn.email,
+                audience: userReturn.email
             }
-            res.send(token.sign({data:"test"}, sOptions));
-        });   
+            res.send(token.sign({ data: "test" }, sOptions));
+        });
     }
 });
 
@@ -43,23 +42,34 @@ router.get('/github', function (req, res, next) {
     res.send();
 });
 
-router.get('/google', function (req, res, next) {
+
+router.get('/google', async function (req, res, next) {
     res.set("Cached-Control", "public, max-age=300, s-maxage-600");
     if (req.query.code) {
-        let userObj = google.getFromCode(req.query.code);
+        let userObj = await google.getFromCode(req.query.code);
         console.log(userObj);
-        res.send({ isSuccess: false, user: userObj });
+
+        let username = userObj.email;
+        let firstname = userObj.name.givenName;
+        let lastname = userObj.name.familyName;
+        let email = userObj.email;
+        let password = userObj.tokens.access_token;
+
+        classic.upsertUser(username, firstname, lastname, email, password, function (user) {
+            res.send(user);
+        });
     } else {
         res.send({ isSuccess: false, errors: [{ field: "general", msg: "Bad Request" }] });
     }
 });
 
-router.get('/getGoogleAuthLink', function(req, res, next) {
-    res.set("Cached-Control","public, max-age=300, s-maxage-600");
-    let link = {url: google.urlGoogle()};
-    res.send(link);
-  });
-  
+router.get('/getGoogleAuthLink', function (req, res, next) {
+    res.set("Cached-Control", "public, max-age=300, s-maxage-600");
+    let link = { url: google.urlGoogle() };
+    res.redirect(link.url);
+    //res.send(link);
+});
+
 
 
 module.exports = router;

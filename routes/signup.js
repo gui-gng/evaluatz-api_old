@@ -36,7 +36,6 @@ router.get('/classic', async function (req, res, next) {
         classic.upsertUser(username, firstname, lastname, email, password, function(user){
             res.send(user);
         });
-        
     }
 });
 // http://localhost:5000/signup/classic?username=guigng&password=1234&firstname=Guilherme&lastname=Nazareth&email=guigng@gmail.com
