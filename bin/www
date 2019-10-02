@@ -12,7 +12,7 @@ if(evaluatz_is_dev){
 /**
  * Module dependencies.
  */
-require("dotenv").config();
+// require("dotenv").config();
 const app = require('../app');
 const debug = require('debug')('page:server');
 const http = require('http');
