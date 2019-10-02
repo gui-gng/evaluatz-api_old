@@ -24,12 +24,9 @@ const searchers = require("../data_searchers/searchers")
 global.package = readPkg.sync();
 
 
-
 //Start Searchers for cars
 const config_limit_request = JSON.parse(fs.readFileSync("./config/config_limit_request.json")).filter(c => c.active);
 searchers.run(config_limit_request);
-
-
 
 /**
  * Get port from environment and store in Express.
