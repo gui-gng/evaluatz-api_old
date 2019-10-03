@@ -34,7 +34,7 @@ router.get('/classic', async function(req, res, next) {
                     subject: authRes.user.email,
                     audience: authRes.user.email
                 }
-                res.send(token.sign({ data: "test" }, sOptions));
+                res.send({user:authRes.user, token: token.sign({ data: "test" }, sOptions)});
             }else{
                 res.send(authRes.errors);
             }
