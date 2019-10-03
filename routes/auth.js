@@ -36,7 +36,6 @@ router.get('/classic', async function(req, res, next) {
                 }
                 res.send(token.sign({ data: "test" }, sOptions));
             }else{
-                res.sendStatus(403);
                 res.send(authRes.errors);
             }
            
