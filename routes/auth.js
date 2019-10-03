@@ -8,7 +8,7 @@ const classic = require("../auth/classic");
 const github = require("../auth/github");
 const google = require("../auth/google");
 
-router.get('/', function (req, res, next) {
+router.get('/', function(req, res, next) {
     res.set("Cached-Control", "public, max-age=300, s-maxage-600");
     sOptions = {
         issuer: req.ip,
@@ -19,31 +19,38 @@ router.get('/', function (req, res, next) {
 });
 
 /* GET home page. */
-router.get('/classic', async function (req, res, next) {
+router.get('/classic', async function(req, res, next) {
     res.set("Cached-Control", "public, max-age=300, s-maxage-600");
+    
     if (!req.query.username || !req.query.password) {
         res.send({ isSuccess: false, errors: [{ field: "general", msg: "Bad Request" }] })
     } else {
         let username = req.query.username;
         let password = req.query.password;
-        classic.auth(username, password, function (userReturn) {
-            sOptions = {
-                issuer: req.ip,
-                subject: userReturn.email,
-                audience: userReturn.email
+        classic.auth(username, password, function(authRes) {
+            if(authRes.isSuccess){
+                sOptions = {
+                    issuer: req.ip,
+                    subject: authRes.user.email,
+                    audience: authRes.user.email
+                }
+                res.send(token.sign({ data: "test" }, sOptions));
+            }else{
+                res.sendStatus(403);
+                res.send(authRes.errors);
             }
-            res.send(token.sign({ data: "test" }, sOptions));
+           
         });
     }
 });
 
-router.get('/github', function (req, res, next) {
+router.get('/github', function(req, res, next) {
     res.set("Cached-Control", "public, max-age=300, s-maxage-600");
     res.send();
 });
 
 
-router.get('/google', async function (req, res, next) {
+router.get('/google', async function(req, res, next) {
     res.set("Cached-Control", "public, max-age=300, s-maxage-600");
     if (req.query.code) {
         let userObj = await google.getFromCode(req.query.code);
@@ -55,7 +62,7 @@ router.get('/google', async function (req, res, next) {
         let email = userObj.email;
         let password = userObj.tokens.access_token;
 
-        classic.upsertUser(username, firstname, lastname, email, password, function (user) {
+        classic.upsertUser(username, firstname, lastname, email, password, function(user) {
             res.send(user);
         });
     } else {
@@ -63,7 +70,7 @@ router.get('/google', async function (req, res, next) {
     }
 });
 
-router.get('/getGoogleAuthLink', function (req, res, next) {
+router.get('/getGoogleAuthLink', function(req, res, next) {
     res.set("Cached-Control", "public, max-age=300, s-maxage-600");
     let link = { url: google.urlGoogle() };
     res.redirect(link.url);

@@ -59,7 +59,7 @@ async function auth(username, password, callback) {
 
     bcrypt.compare(password, userAuth.password, function (err, res) {
         if (res) {
-            callback(userAuth);
+            callback({isSuccess: true, user: userAuth});
         }
         else
         {
