@@ -9,6 +9,7 @@ if(evaluatz_is_dev){
   console.log("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
 }
 
+
 /**
  * Module dependencies.
  */
@@ -22,7 +23,6 @@ const readPkg = require('read-pkg');
 const searchers = require("../data_searchers/searchers")
 
 global.package = readPkg.sync();
-
 
 //Start Searchers for cars
 const config_limit_request = JSON.parse(fs.readFileSync("./config/config_limit_request.json")).filter(c => c.active);

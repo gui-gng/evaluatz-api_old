@@ -3,8 +3,6 @@ var google = require("googleapis").google;
 /*******************/
 /** CONFIGURATION **/
 /*******************/
-console.log("ENV VARIABLES");
-console.log(process.env);
 
 const googleConfig = {
     clientId: process.env.GOOGLE_CLIENT_ID, // e.g. asdfghjkljhgfdsghjk.apps.googleusercontent.com
@@ -21,7 +19,6 @@ const defaultScope = [
 /*************/
 /** HELPERS **/
 /*************/
-
 function createConnection() {
     console.log("Creating connection");
     return new google.auth.OAuth2(
