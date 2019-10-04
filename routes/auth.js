@@ -69,7 +69,8 @@ router.get('/google', async function(req, res, next) {
                 audience: sbj
             }
             let tokenRes = token.sign({ authType: "Google" }, sOptions);
-            res.redirect("http://localhost:3000/Auth?token=" + tokenRes);
+            
+            res.redirect("http://localhost:3000/Auth/" + tokenRes);
         });
     } else {
         res.send({ isSuccess: false, errors: [{ field: "general", msg: "Bad Request" }] });
