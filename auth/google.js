@@ -93,7 +93,7 @@ async function getGoogleAccountFromCode(code) {
 }
 
 async function upsertUser(username, firstname, lastname, email, password, callback) {
-    await userDB.upsertUser(username, firstname, lastname, email, hash, 2);
+    await userDB.upsertUser(username, firstname, lastname, email, password, 2);
     let userAuth = (await userDB.getUserUsernameEmail(username));
     callback({
         isSuccess: true,
