@@ -67,10 +67,8 @@ router.get('/google', async function(req, res, next) {
                 subject: user.email,
                 audience: user.email
             }
-            // res.send({user, token: token.sign({ authType: "Google" }, sOptions)});
-            res.cookie("username",username);
-            res.cookie("code", req.query.code)
-            res.redirect("http://localhost:3000/");
+            let tokenRes = token.sign({ authType: "Google" }, sOptions);
+            res.redirect("http://localhost:3000/Auth?token=" + tokenRes);
         });
     } else {
         res.send({ isSuccess: false, errors: [{ field: "general", msg: "Bad Request" }] });
