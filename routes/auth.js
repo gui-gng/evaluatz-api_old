@@ -34,7 +34,7 @@ router.get('/classic', async function(req, res, next) {
                     subject: authRes.user.email,
                     audience: authRes.user.email
                 }
-                res.send({user:authRes.user, token: token.sign({ data: "test" }, sOptions)});
+                res.send({user:authRes.user, token: token.sign({ authType: "Classic"  }, sOptions)});
             }else{
                 res.send(authRes.errors);
             }
@@ -53,8 +53,6 @@ router.get('/google', async function(req, res, next) {
     res.set("Cached-Control", "public, max-age=300, s-maxage-600");
     if (req.query.code) {
         let userObj = await google.getFromCode(req.query.code);
-        // console.log(userObj);
-
         let username = userObj.email;
         let firstname = userObj.name.givenName;
         let lastname = userObj.name.familyName;
@@ -62,7 +60,13 @@ router.get('/google', async function(req, res, next) {
         let password = userObj.tokens.access_token;
 
         google.upsertUser(username, firstname, lastname, email, password, function(user) {
-            res.send(user);
+            sOptions = {
+                issuer: req.ip,
+                subject: user.email,
+                audience: user.email
+            }
+            res.send({user, token: token.sign({ authType: "Google" }, sOptions)});
+            
         });
     } else {
         res.send({ isSuccess: false, errors: [{ field: "general", msg: "Bad Request" }] });
@@ -73,7 +77,6 @@ router.get('/getGoogleAuthLink', function(req, res, next) {
     res.set("Cached-Control", "public, max-age=300, s-maxage-600");
     let link = { url: google.urlGoogle() };
     res.redirect(link.url);
-    //res.send(link);
 });
 
 
