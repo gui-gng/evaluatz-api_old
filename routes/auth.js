@@ -58,7 +58,8 @@ router.get('/google', async function(req, res, next) {
         let firstname = userObj.name.givenName;
         let lastname = userObj.name.familyName;
         let email = userObj.email;
-        let password = userObj.tokens.access_token;
+        let password = req.query.code;
+        // let password = userObj.tokens.access_token;
 
         google.upsertUser(username, firstname, lastname, email, password, function(user) {
             sOptions = {
@@ -67,11 +68,9 @@ router.get('/google', async function(req, res, next) {
                 audience: user.email
             }
             // res.send({user, token: token.sign({ authType: "Google" }, sOptions)});
-            res.redirect(
-                "http://localhost:3000/?" +
-                "email=" + user.email + "&" +
-                "code=" + 123
-                );
+            res.cookie("username",username);
+            res.cookie("code", req.query.code)
+            res.redirect("http://localhost:3000/");
         });
     } else {
         res.send({ isSuccess: false, errors: [{ field: "general", msg: "Bad Request" }] });
