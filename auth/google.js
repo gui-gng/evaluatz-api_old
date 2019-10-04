@@ -63,11 +63,16 @@ function urlGoogle() {
 async function getGoogleAccountFromCode(code) {
 
     try {
+        console.log("getGoogleAccountFromCode: Create connection");
         const auth = createConnection();
+        console.log("getGoogleAccountFromCode: Get Token");
         const data = await auth.getToken(code);
+        console.log(data);
         const tokens = data.tokens;
         auth.setCredentials(tokens);
+        console.log("getGoogleAccountFromCode: Get User");
         const plus = getGooglePlusApi(auth);
+        console.log(plus);
         const me = await plus.people.get({ userId: 'me' });
         const userGoogleId = me.data.id;
         const userGoogleEmail = me.data.emails && me.data.emails.length && me.data.emails[0].value;
