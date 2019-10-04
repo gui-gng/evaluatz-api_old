@@ -62,10 +62,11 @@ router.get('/google', async function(req, res, next) {
         // let password = userObj.tokens.access_token;
 
         google.upsertUser(username, firstname, lastname, email, password, function(user) {
+            let sbj = user.email ? user.email : "Nothing";
             sOptions = {
                 issuer: req.ip,
-                subject: user.email,
-                audience: user.email
+                subject: sbj,
+                audience: sbj
             }
             let tokenRes = token.sign({ authType: "Google" }, sOptions);
             res.redirect("http://localhost:3000/Auth?token=" + tokenRes);
