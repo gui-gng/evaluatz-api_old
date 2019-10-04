@@ -54,7 +54,7 @@ router.get('/google', async function(req, res, next) {
     res.set("Cached-Control", "public, max-age=300, s-maxage-600");
     if (req.query.code) {
         let userObj = await google.getFromCode(req.query.code);
-        let username = userObj.email;
+        let username = "2_" + userObj.id;
         let firstname = userObj.name.givenName;
         let lastname = userObj.name.familyName;
         let email = userObj.email;
