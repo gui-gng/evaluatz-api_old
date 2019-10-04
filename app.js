@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-
+require('newrelic');
  
 /**
  * IMPORTING ROUTES
