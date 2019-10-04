@@ -20,7 +20,7 @@ async function upsertUser(username, firstname, lastname, email, password, auth_m
     return new Promise(async (resolve) => {
         let sqlQuery = "INSERT INTO access.user (username, firstname, lastname, email, password, auth_method_id) " 
         + " VALUES ($1,$2,$3,$4,$5,$6)  ON CONFLICT (email) DO UPDATE "
-        + " SET username = $1, password = $5, firstname = $2, lastname = $3; auth_method_id = $6";
+        + " SET username = $1, password = $5, firstname = $2, lastname = $3, auth_method_id = $6;";
         let values = [username, firstname, lastname, email, password, auth_method_id];
 
         console.log("Signup " + values);
