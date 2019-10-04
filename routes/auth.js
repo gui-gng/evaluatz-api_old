@@ -35,6 +35,7 @@ router.get('/classic', async function(req, res, next) {
                     audience: authRes.user.email
                 }
                 res.send({user:authRes.user, token: token.sign({ authType: "Classic"  }, sOptions)});
+                
             }else{
                 res.send(authRes.errors);
             }
@@ -65,8 +66,12 @@ router.get('/google', async function(req, res, next) {
                 subject: user.email,
                 audience: user.email
             }
-            res.send({user, token: token.sign({ authType: "Google" }, sOptions)});
-            
+            // res.send({user, token: token.sign({ authType: "Google" }, sOptions)});
+            res.redirect(
+                "http://localhost:3000/?" +
+                "email=" + user.email + "&" +
+                "code=" + 123
+                );
         });
     } else {
         res.send({ isSuccess: false, errors: [{ field: "general", msg: "Bad Request" }] });
