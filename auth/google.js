@@ -1,5 +1,7 @@
 
 var google = require("googleapis").google;
+
+const userDB = require("../DAO/users");
 /*******************/
 /** CONFIGURATION **/
 /*******************/
@@ -85,15 +87,17 @@ async function getGoogleAccountFromCode(code) {
     }
 }
 
-
-
-async function getUserData(token){
-    const url = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=";
-
+async function upsertUser(username, firstname, lastname, email, password, callback) {
+    await userDB.upsertUser(username, firstname, lastname, email, hash, 2);
+    let userAuth = (await userDB.getUserUsernameEmail(username));
+    callback({
+        isSuccess: true,
+        user: userAuth
+    });
 }
-
 
 module.exports = {
     urlGoogle: urlGoogle,
-    getFromCode: async (code) => await getGoogleAccountFromCode(code)
+    getFromCode: async (code) => await getGoogleAccountFromCode(code),
+    upsertUser: async (username, firstname, lastname, email, password, callback) => await upsertUser(username, firstname, lastname, email, password, callback)
 }

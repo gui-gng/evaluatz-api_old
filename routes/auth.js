@@ -61,7 +61,7 @@ router.get('/google', async function(req, res, next) {
         let email = userObj.email;
         let password = userObj.tokens.access_token;
 
-        classic.upsertUser(username, firstname, lastname, email, password, function(user) {
+        google.upsertUser(username, firstname, lastname, email, password, function(user) {
             res.send(user);
         });
     } else {
