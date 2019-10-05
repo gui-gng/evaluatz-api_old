@@ -35,8 +35,9 @@ router.get('/classic', async function (req, res, next) {
                     audience: authRes.user.email
                 }
 
-              let tokenRes = token.sign({ authType: "Classic" }, sOptions);
-                res.redirect("http://localhost:3000/Auth/" + tokenRes);
+                let tokenRes = token.sign({ authType: "Classic" }, sOptions);
+                res.send(tokenRes);
+                // res.redirect("http://localhost:3000/Auth/" + tokenRes);
             } else {
                 res.send(authRes.errors);
             }
