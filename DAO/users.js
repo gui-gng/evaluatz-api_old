@@ -12,7 +12,6 @@ module.exports =  {
     getUserUsernameEmail: async (value) => {
         return await getUserUsernameEmail(value);
     }
-
 }
 
 
