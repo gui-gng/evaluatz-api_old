@@ -15,8 +15,9 @@ const jwt = require('jsonwebtoken');
    }
   */
 
-var privateKEY = fs.readFileSync('./private.key', 'utf8');
-var publicKEY = fs.readFileSync('./public.key', 'utf8');
+var privateKEY = process.env.PRIVATE_KEY; // fs.readFileSync('./private.key', 'utf8');
+var publicKEY = process.env.PUBLIC_KEY;  //fs.readFileSync('./public.key', 'utf8');
+
 
 module.exports = {
     sign: (payload, $Options) => {
