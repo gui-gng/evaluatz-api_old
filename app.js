@@ -54,10 +54,6 @@ app.use(cors());
 
 
 
-
-
-
-
 /**
  * Add routes
  */
