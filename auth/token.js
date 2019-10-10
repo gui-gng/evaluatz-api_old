@@ -37,7 +37,7 @@ module.exports = {
             subject: $Option.subject,
             audience: $Option.audience,
             expiresIn: "1h",
-            algorithm: ["RS256"]
+            algorithm: "RS256"
         };
         try {
             return jwt.verify(token, publicKEY, verifyOptions);

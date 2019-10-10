@@ -5,9 +5,9 @@ const Token = require("../auth/token");
 const Users = require('../DAO/users');
 
 router.get('/:token', async function (req, res, next) {
-    let token = req.query.token;
-    var payload = Token.decode(token).payload.sub;
-    
+    let token = req.params.token;
+    var payload = Token.decode(token).payload;
+    console.log(payload);
     sOptions = {
         issuer: req.ip,
         subject: payload.sub,
@@ -15,7 +15,7 @@ router.get('/:token', async function (req, res, next) {
     }
     let isValid = Token.verify(token, sOptions);
     console.log(isValid)
-    res.send(isValid ? await getUserByUsername(value) : {Error: "Invalid Token"});
+    res.send(isValid ? await getUserByUsername(payload.sub) : {Error: "Invalid Token"});
 });
 
 async function getUserByUsername(username) {
