@@ -1,4 +1,6 @@
 require('newrelic');
+const dotenv = require('dotenv');
+dotenv.config();
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -6,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+
 
  
 /**

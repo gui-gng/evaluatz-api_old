@@ -22,7 +22,7 @@ async function upsertUser(username, firstname, lastname, email, password, auth_m
         + " SET username = $1, password = $5, firstname = $2, lastname = $3, auth_method_id = $6;";
         let values = [username, firstname, lastname, email, password, auth_method_id];
 
-        console.log("Signup " + values);
+        // console.log("Signup " + values);
         resolve(await db.execute(pool, sqlQuery, values));
     });
 }

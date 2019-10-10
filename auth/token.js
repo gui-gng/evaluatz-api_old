@@ -15,13 +15,12 @@ const jwt = require('jsonwebtoken');
    }
   */
 
-var privateKEY = process.env.PRIVATE_KEY; // fs.readFileSync('./private.key', 'utf8');
-var publicKEY = process.env.PUBLIC_KEY;  //fs.readFileSync('./public.key', 'utf8');
+const privateKEY = process.env.PRIVATE_KEY; // fs.readFileSync('./private.key', 'utf8');
+const publicKEY = process.env.PUBLIC_KEY;  //fs.readFileSync('./public.key', 'utf8');
 
 
 module.exports = {
     sign: (payload, $Options) => {
-
         var signOptions = {
             issuer: $Options.issuer,
             subject: $Options.subject,

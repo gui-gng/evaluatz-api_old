@@ -1,20 +1,20 @@
 var express = require('express');
 var router = express.Router();
 
+const Token = require("../auth/token");
 const Users = require('../DAO/users');
 
-router.get('/:method/:value', async function (req, res, next) {
+router.get('/:username', async function (req, res, next) {
+    let token = req.cookies.token;
     
-    let method = req.params.method;
-    let value = req.params.value;
-   
-    switch (method) {
-        case "1":
-            res.send(await getUserByUsername(value));
-        default:
-            res.send("Params not defined");
+    sOptions = {
+        issuer: req.ip,
+        subject: req.query.username,
+        audience: req.query.username
     }
-
+    let isValid = Token.verify(token, sOptions);
+    console.log(isValid)
+    res.send(isValid ? await getUserByUsername(value) : {Error: "Invalid Token"});
 });
 
 async function getUserByUsername(username) {

@@ -49,12 +49,11 @@ async function upsertUser(username, firstname, lastname, email, password, callba
 
 async function auth(username, password, callback) {
     if(!username || !password){
-        return { isSuccess: false, errors: [{ field: "Login", msg: "Empty fields" }] }
+        callback( { isSuccess: false, errors: [{ field: "Login", msg: "Empty fields" }] });
     }
     let userAuth = (await userDB.getUserUsernameEmail(username))[0];
-    
     if(!userAuth || !userAuth.password){
-        return { isSuccess: false, errors: [{ field: "Login", msg: "Invalid email or password" }] }
+        callback( { isSuccess: false, errors: [{ field: "Login", msg: "Invalid email or password" }] });
     }
 
     bcrypt.compare(password, userAuth.password, function (err, res) {
