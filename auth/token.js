@@ -49,4 +49,5 @@ module.exports = {
         return jwt.decode(token, { complete: true });
         //returns null if token is invalid
     }
+    
 }

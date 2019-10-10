@@ -32,12 +32,9 @@ router.get('/classic', async function (req, res, next) {
                 sOptions = {
                     issuer: req.ip,
                     subject: authRes.user.email,
-                    audience: authRes.user.email
+                    audience: "Evaluatz"
                 }
-                
                 let tokenRes = token.sign({ authType: "Classic" }, sOptions);
-                console.log("Test token");
-                console.log(token.verify(tokenRes, sOptions));
                 res.send(tokenRes);
             } else {
                 res.send(authRes.errors);
