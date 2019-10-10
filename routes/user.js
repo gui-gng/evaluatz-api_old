@@ -4,13 +4,14 @@ var router = express.Router();
 const Token = require("../auth/token");
 const Users = require('../DAO/users');
 
-router.get('/:username', async function (req, res, next) {
-    let token = req.cookies.token;
+router.get('/:token', async function (req, res, next) {
+    let token = req.query.token;
+    var payload = Token.decode(token).payload.sub;
     
     sOptions = {
         issuer: req.ip,
-        subject: req.query.username,
-        audience: req.query.username
+        subject: payload.sub,
+        audience: payload.aud
     }
     let isValid = Token.verify(token, sOptions);
     console.log(isValid)
