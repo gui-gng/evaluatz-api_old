@@ -51,7 +51,7 @@ async function auth(username, password, callback) {
     if(!username || !password){
         callback( { isSuccess: false, errors: [{ field: "Login", msg: "Empty fields" }] });
     }
-    let userAuth = (await userDB.getUserUsernameEmail(username))[0];
+    let userAuth = await userDB.getUserUsernameEmail(username);
     if(!userAuth || !userAuth.password){
         callback( { isSuccess: false, errors: [{ field: "Login", msg: "Invalid email or password" }] });
     }else{
