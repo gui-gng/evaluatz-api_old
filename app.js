@@ -35,26 +35,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-// ALLOW CORS
-var allowedOrigins = ['http://localhost:3000',
-  'https://www.evaluatz.com',
-  'https://evaluatz-page.herokuapp.com'];
-app.use(cors({
-  origin: function (origin, callback) {
-    // allow requests with no origin 
-    // (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      var msg = 'The CORS policy for this site does not ' +
-        'allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  }
-}));
+// // ALLOW CORS
+// var allowedOrigins = ['http://localhost:3000',
+//   'https://www.evaluatz.com',
+//   'https://evaluatz-page.herokuapp.com'];
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     // allow requests with no origin 
+//     // (like mobile apps or curl requests)
+//     if (!origin) return callback(null, true);
+//     if (allowedOrigins.indexOf(origin) === -1) {
+//       var msg = 'The CORS policy for this site does not ' +
+//         'allow access from the specified Origin.';
+//       return callback(new Error(msg), false);
+//     }
+//     return callback(null, true);
+//   }
+// }));
 
 
-// app.use(cors());
+app.use(cors());
 
 
 
