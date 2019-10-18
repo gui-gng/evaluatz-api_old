@@ -15,11 +15,11 @@ if (global.evaluatz_is_dev) {
   }
 } else {
   dbConfig = {
-      host: 'db-postgresql-evaluatz-do-user-5184838-0.db.ondigitalocean.com',
-      port: 25060,
-      database: "Evaluatz",
-      user: 'evaluatz-user-api',
-      password: 'oim98l32kq1xbh8t',
+      host: process.env.PG_HOST,
+      port: process.env.PG_PORT,
+      database: process.env.PG_DATABASE,
+      user: process.env.PG_USER,
+      password: process.env.PG_PASSWORD,
       ssl: true
   }
 }
