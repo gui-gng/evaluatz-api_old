@@ -1,13 +1,12 @@
 # Evaluatz API
 
-In the project directory, you can run:
 
 ### `https://api.evaluatz.com`
 
 API main page
 Shows the api version
 
-### Auth
+## Auth
 
 #### `https://api.evaluatz.com/auth/classic`
 
@@ -28,24 +27,24 @@ returns the token
 
 returns the link for google auth
 
-### Signup
+## Signup
 
 #### `https://api.evaluatz.com/signup/classic`
 
 Receive the data and create a new user
 ##### Params
-username 
-firstname
-lastname
-email
-password
+-username 
+-firstname
+-lastname
+-email
+-password
 
 
 
-### Get Data
+## Get Data
 
-**All this links require a token provided on header:
-`x-access-token or authorization`
+**All this links require a token provided on header:**
+`x-access-token` or `authorization`
 
 
 #### `https://api.evaluatz.com/user`
