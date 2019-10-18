@@ -6,9 +6,8 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-var bodyParser = require('body-parser');
-var cors = require('cors');
-
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 
 /**
@@ -57,16 +56,17 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 
 
+app.use(cors());
 
 /**
  * Add routes
  */
 app.use('/', indexRouter);
-app.use('/auth', authRouter);
+// app.use('/auth', authRouter);
 app.use('/signup', signupRouter);
 app.use('/user', userRouter);
 
-app.use(cors());
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
