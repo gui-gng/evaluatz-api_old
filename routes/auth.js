@@ -20,14 +20,12 @@ router.get('/', function (req, res, next) {
 
 /* GET home page. */
 router.get('/classic', async function (req, res, next) {
-    res.set("Cached-Control", "public, max-age=300, s-maxage-600");
-
     if (!req.query.username || !req.query.password) {
         res.send({ isSuccess: false, errors: [{ field: "general", msg: "Bad Request" }] })
     } else {
         let username = req.query.username;
         let password = req.query.password;
-        classic.auth(username, password, function (authRes) {
+        await classic.auth(username, password, function (authRes) {
             if (authRes.isSuccess) {
                 sOptions = {
                     issuer: req.ip,
@@ -39,6 +37,7 @@ router.get('/classic', async function (req, res, next) {
             } else {
                 res.send(authRes.errors);
             }
+            
         });
     }
 });

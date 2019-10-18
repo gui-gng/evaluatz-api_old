@@ -1,4 +1,4 @@
-const userDB = require("../DAO/users");
+const userDB = require("../DAO/user");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -54,15 +54,15 @@ async function auth(username, password, callback) {
     let userAuth = (await userDB.getUserUsernameEmail(username))[0];
     if(!userAuth || !userAuth.password){
         callback( { isSuccess: false, errors: [{ field: "Login", msg: "Invalid email or password" }] });
+    }else{
+        bcrypt.compare(password, userAuth.password, function (err, res) {
+            if (res) {
+                callback({isSuccess: true, user: userAuth});
+            }
+            else
+            {
+                callback({isSuccess: false, errors: [{ field: "Login", msg: "Invalid email or password" }]});
+            }
+        });
     }
-
-    bcrypt.compare(password, userAuth.password, function (err, res) {
-        if (res) {
-            callback({isSuccess: true, user: userAuth});
-        }
-        else
-        {
-            callback({isSuccess: false, errors: [{ field: "Login", msg: "Invalid email or password" }]});
-        }
-    });
 }

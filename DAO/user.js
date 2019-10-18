@@ -36,7 +36,7 @@ async function getFirst(field, value){
 
 async function getUserUsernameEmail(value){
     return new Promise(async (resolve) => {
-        let sqlQuery = "SELECT userid, username, firstname, lastname, email FROM access.user WHERE username = $1 or email = $1 LIMIT 1;";
+        let sqlQuery = "SELECT * FROM access.user WHERE username = $1 or email = $1 LIMIT 1;";
         let values = [value];
         resolve(await db.execute(pool, sqlQuery, values));
     });
