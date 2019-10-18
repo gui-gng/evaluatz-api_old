@@ -1,4 +1,3 @@
-require('newrelic');
 const dotenv = require('dotenv');
 dotenv.config();
 const createError = require('http-errors');
