@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-
 //AUTH
 const token = require("../auth/token");
 const classic = require("../auth/classic");
