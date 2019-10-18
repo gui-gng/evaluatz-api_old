@@ -21,8 +21,6 @@ async function upsertUser(username, firstname, lastname, email, password, auth_m
         + " VALUES ($1,$2,$3,$4,$5,$6)  ON CONFLICT (email) DO UPDATE "
         + " SET username = $1, password = $5, firstname = $2, lastname = $3, auth_method_id = $6;";
         let values = [username, firstname, lastname, email, password, auth_method_id];
-
-        // console.log("Signup " + values);
         resolve(await db.execute(pool, sqlQuery, values));
     });
 }
@@ -38,7 +36,7 @@ async function getFirst(field, value){
 
 async function getUserUsernameEmail(value){
     return new Promise(async (resolve) => {
-        let sqlQuery = "SELECT * FROM access.user WHERE username = $1 or email = $1 LIMIT 1;";
+        let sqlQuery = "SELECT userid, username, firstname, lastname, email FROM access.user WHERE username = $1 or email = $1 LIMIT 1;";
         let values = [value];
         resolve(await db.execute(pool, sqlQuery, values));
     });

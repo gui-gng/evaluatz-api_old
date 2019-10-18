@@ -33,11 +33,11 @@ returns the link for google auth
 
 Receive the data and create a new user
 ##### Params
--username 
--firstname
--lastname
--email
--password
+- username 
+- firstname
+- lastname
+- email
+- password
 
 
 
