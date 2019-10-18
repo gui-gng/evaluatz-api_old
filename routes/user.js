@@ -7,7 +7,7 @@ const User = require('../DAO/user');
 const User_transactions = require('../DAO/user_transactions');
 
 router.get('/', auth, async function (req, res, next) {
-    let user = await User.getUserByUsername(req.user.sub);
+    let user = await User.getUserUsernameEmail(req.user.sub);
     const d = new Date(0);
     d.setUTCSeconds(req.user.exp);
     user["exp_sess"] = d;
