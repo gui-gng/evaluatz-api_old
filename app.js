@@ -61,7 +61,7 @@ app.use(cors());
  * Add routes
  */
 app.use('/', indexRouter);
-// app.use('/auth', authRouter);
+app.use('/auth', authRouter);
 app.use('/signup', signupRouter);
 app.use('/user', userRouter);
 
