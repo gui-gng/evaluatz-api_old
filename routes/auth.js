@@ -7,15 +7,7 @@ const classic = require("../auth/classic");
 const github = require("../auth/github");
 const google = require("../auth/google");
 
-router.get('/', function (req, res, next) {
-    res.set("Cached-Control", "public, max-age=300, s-maxage-600");
-    sOptions = {
-        issuer: req.ip,
-        subject: req.query.email,
-        audience: req.query.email
-    }
-    res.send(token.verify(req.query.code, sOptions));
-});
+
 
 /* GET home page. */
 router.get('/classic', async function (req, res, next) {
@@ -33,7 +25,7 @@ router.get('/classic', async function (req, res, next) {
                     audience: "Evaluatz"
                 }
                 let tokenRes = token.sign({ authType: "Classic" }, sOptions);
-                res.send(tokenRes);
+                res.send({token: tokenRes});
             } else {
                 res.send(authRes.errors);
             }
