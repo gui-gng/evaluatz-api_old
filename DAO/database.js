@@ -40,6 +40,7 @@ module.exports = {
             })
             .catch(e => {
                 console.log(e);
+                rowsReturn = e;
                 client.release();
             })
             .then(() => resolve(rowsReturn));

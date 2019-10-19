@@ -6,6 +6,48 @@ const auth = require("../middleware/auth");
 const ProjectDAO = require('../DAO/project');
 const TransactionDAO = require('../DAO/transaction');
 
+
+router.get('/create', auth, async function (req, res, next) {
+    if (!req.query.name || !req.user.sub) {
+        res.send({ isSuccess: false, errors: [{ section: "Create Project", msg: "Bad Request" }] });
+    } else {
+        try {
+            let name = req.query.name;
+            let owner = req.user.sub;
+            const project = await ProjectDAO.create(name, owner);
+            if (project.name == "error") {
+                res.send({ isSuccess: false, code: project.code, error: project.detail })
+            } else {
+                res.send({ isSuccess: true, project })
+            }
+        } catch (error) {
+            res.send({ isSuccess: false, errors: [{ section: "Create Project", msg: error }] });
+        }
+    }
+});
+
+router.post('/create', auth, async function (req, res, next) {
+    if (!req.body.name || !req.user.sub) {
+        res.send({ isSuccess: false, errors: [{ section: "Create Project", msg: "Bad Request" }] });
+    } else {
+        try {
+            const name = req.body.name;
+            const owner = req.user.sub;
+            const project = await ProjectDAO.create(name, owner);
+            if (project.name = "error") {
+                res.send({ isSuccess: false, code: project.code, error: project.detail })
+            } else {
+                res.send({ isSuccess: true, project })
+            }
+
+        } catch (error) {
+            res.send({ isSuccess: false, errors: [{ section: "Create Project", msg: error }] });
+        }
+    }
+});
+
+
+
 router.get('/:id', auth, async function (req, res, next) {
     try {
         let project = await ProjectDAO.geByID(req.params.id);
@@ -28,33 +70,5 @@ router.get(':id/transactions', auth, async function (req, res, next) {
 });
 
 
-router.get('/create', auth, async function (req, res, next) {
-    if (!req.query.name || !req.query.owner) {
-        res.send({ isSuccess: false, errors: [{ section: "Create Project", msg: "Bad Request" }] });
-    } else {
-        try{
-            let name = req.query.name;
-            let owner = req.user.sub;
-            await ProjectDAO.create(name, owner);
-            res.send({ isSuccess: true})
-        }catch(error){
-            res.send({ isSuccess: false, errors: [{ section: "Create Project", msg: error }] });
-        }
-    }
-});
 
-router.post('/create', auth, async function (req, res, next) {
-    if (!req.body.name || !req.user.sub) {
-        res.send({ isSuccess: false, errors: [{ section: "Create Project", msg: "Bad Request" }] });
-    } else {
-        try{
-            let name = req.body.name;
-            let owner = req.user.sub;
-            await ProjectDAO.create(name, owner);
-            res.send({ isSuccess: true})
-        }catch(error){
-            res.send({ isSuccess: false, errors: [{ section: "Create Project", msg: error }] });
-        }
-    }
-});
 module.exports = router;

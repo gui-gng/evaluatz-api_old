@@ -4,6 +4,7 @@ let pool = db.createPool();
 
 module.exports = {
     create: async (name, owner) => {
+        name = name.toUpperCase();
         return await create(name, owner);
     },
     remove: async (id) => {
@@ -16,17 +17,21 @@ module.exports = {
         return await geByID(id);
     },
     search: async (str,  page_num = 1, page_length = 100) => {
+        str = str.toUpperCase();
         return await search(str,  page_num, page_length);
     }
 
 }
 
-
+/*
+Create project name as Upper to avoid conflict with "Evaluatz" project
+*/
 async function create(name, owner) {
     return new Promise(async (resolve) => {
-        let sqlQuery = "INSERT INTO access.project(project_name, project_owner) " +
+        let sqlQuery = "INSERT INTO access.project (project_name, project_owner) " +
             "VALUES ($1, $2);";
         let values = [name, owner];
+        console.log(values);
         resolve(await db.execute(pool, sqlQuery, values));
     });
 }
@@ -72,7 +77,9 @@ async function search(str, page_num, page_length) {
             const limit = page_length;
             const offset = (page_num - 1) * page_length;
             let sqlQuery = "SELECT * FROM access.get_project WHERE name like $1 LIMIT $2 OFFSET $3;";
+            console.log(sqlQuery);
             let values = ["%" + str + "%",  limit, offset];
+            console.log(values);
             const projects = await db.execute(pool, sqlQuery, values);
             resolve(projects);
         } catch (error) {
