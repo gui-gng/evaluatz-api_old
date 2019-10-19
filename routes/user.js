@@ -3,20 +3,24 @@ var router = express.Router();
 
 const auth = require("../middleware/auth");
 
-const User = require('../DAO/user');
-const User_transactions = require('../DAO/user_transactions');
+const UserDAO = require('../DAO/user');
+const TransactionDAO = require('../DAO/transaction');
 
 router.get('/', auth, async function (req, res, next) {
-    let user = await User.getUserUsernameEmail(req.user.sub);
-    const d = new Date(0);
-    d.setUTCSeconds(req.user.exp);
-    user["exp_sess"] = d;
-    user["exp"] = req.user.exp;
-    res.send(user);
+    try {
+        let user = await UserDAO.getUserByID(req.user.sub);
+        const d = new Date(0);
+        d.setUTCSeconds(req.user.exp);
+        user["exp_sess"] = d;
+        user["exp"] = req.user.exp;
+        res.send(user);
+    } catch (error) {
+        res.send(error);
+    }
 });
 
 router.get('/balance', auth, async function (req, res, next) {
-    const balance = await User_transactions.getBalance(req.user.sub);
+    const balance = await TransactionDAO.getBalance(req.user.sub);
     res.send(balance);
 });
 

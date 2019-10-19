@@ -26,9 +26,10 @@ router.get('/classic', async function (req, res, next) {
         let password = req.query.password;
         await classic.auth(username, password, function (authRes) {
             if (authRes.isSuccess) {
+                
                 sOptions = {
                     issuer: req.ip,
-                    subject: authRes.user.email,
+                    subject: authRes.user.userid,
                     audience: "Evaluatz"
                 }
                 let tokenRes = token.sign({ authType: "Classic" }, sOptions);

@@ -6,12 +6,16 @@ module.exports = {
     upsertUser: async (username, firstname, lastname, email, password, auth_method_id) => {
         return await upsertUser(username, firstname, lastname, email, password, auth_method_id);
     },
-    getUser: async (field, value) => {
-        return await getFirst(field, value);
+    getUserLogin: async (value) => {
+        return await getUserLogin(value);
     },
     getUserUsernameEmail: async (value) => {
         return await getUserUsernameEmail(value);
+    },
+    getUserByID: async (value) => {
+        return await getUserByID(value);
     }
+    
 }
 
 
@@ -25,26 +29,42 @@ async function upsertUser(username, firstname, lastname, email, password, auth_m
     });
 }
 
-async function getFirst(field, value) {
+async function getUserLogin(value) {
     return new Promise(async (resolve) => {
-        let sqlQuery = "SELECT * FROM access.user WHERE $1 LIKE $2 LIMIT 1;";
-        let values = [field, value];
-        resolve(await db.execute(pool, sqlQuery, values));
+        let sqlQuery = "SELECT userid, username, email, password FROM access.user WHERE username = $1 or email = $1 LIMIT 1;";
+        let values = [value];
+        const user = await db.execute(pool, sqlQuery, values);
+        try {
+            resolve(user[0]);
+        } catch (error) {
+            resolve(user);
+        }
     });
 }
 
 
 async function getUserUsernameEmail(value) {
     return new Promise(async (resolve) => {
-        let sqlQuery = "SELECT * FROM access.user WHERE username = $1 or email = $1 LIMIT 1;";
+        let sqlQuery = "SELECT * FROM access.get_user WHERE username = $1 or email = $1 LIMIT 1;";
         let values = [value];
         const user = await db.execute(pool, sqlQuery, values);
         try {
             resolve(user[0]);
-        } catch(error)
-        {
+        } catch (error) {
             resolve(user);
         }
-
     });
+}
+
+    async function getUserByID(value) {
+        return new Promise(async (resolve) => {
+            let sqlQuery = "SELECT * FROM access.get_user WHERE userid = $1 LIMIT 1;";
+            let values = [value];
+            const user = await db.execute(pool, sqlQuery, values);
+            try {
+                resolve(user[0]);
+            } catch (error) {
+                resolve(user);
+            }
+        });
 }
