@@ -28,7 +28,7 @@ async function getTransactions(id, page_num, page_length){
     return new Promise(async (resolve) => {
         const limit = page_length;
         const offset = (page_num - 1) * page_length;
-        let sqlQuery = "SELECT * FROM access.transaction_cross WHERE transaction_user = $1 LIMIT $2 OFFSET $3;";
+        let sqlQuery = "SELECT * FROM access.get_transactions WHERE id_1 = $1 LIMIT $2 OFFSET $3;";
         let values = [id, limit, offset];
         resolve(await db.execute(pool, sqlQuery, values));
     });
@@ -36,7 +36,7 @@ async function getTransactions(id, page_num, page_length){
 
 async function getBalance(id){
     return new Promise(async (resolve) => {
-        let sqlQuery = "SELECT * FROM access.balance WHERE balance_user = $1;";
+        let sqlQuery = "SELECT * FROM access.v_balance WHERE id = $1;";
         let values = [id];
         resolve(await db.execute(pool, sqlQuery, values));
     });
