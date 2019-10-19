@@ -64,7 +64,7 @@ async function getUserUsernameEmail(value) {
             try {
                 resolve(user[0]);
             } catch (error) {
-                resolve(user);
+                resolve(error);
             }
         });
 }

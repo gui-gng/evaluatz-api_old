@@ -18,6 +18,9 @@ module.exports = function(req, res, next) {
     }
     //if can verify the token, set req.user and pass to next middleware
     const decoded = Token.verify(token, verifyOptions);
+    if(!decoded){
+      return res.status(401).send({Error: "Access denied. Token expired."});
+    }
     req.user = decoded;
     next();
   } catch (ex) {
