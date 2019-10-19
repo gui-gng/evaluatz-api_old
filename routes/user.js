@@ -15,7 +15,7 @@ router.get('/', auth, async function (req, res, next) {
         user["exp"] = req.user.exp;
         res.send(user);
     } catch (error) {
-        res.send(error);
+        res.send({Error: error});
     }
 });
 
