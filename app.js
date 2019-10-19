@@ -13,9 +13,11 @@ const cors = require('cors');
  * IMPORTING ROUTES
  */
 const indexRouter = require('./routes/index');
-const authRouter = require('./routes/auth');
+const authRouter =  require('./routes/auth');
 const signupRouter = require('./routes/signup');
-const userRouter = require('./routes/user');
+const userRouter =  require('./routes/user');
+const projectRouter = require('./routes/project');
+const searchRouter = require('./routes/search');
 
 var app = express();
 
@@ -61,8 +63,8 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/signup', signupRouter);
 app.use('/user', userRouter);
-
-
+app.use('/project', projectRouter);
+app.use('/search', searchRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
