@@ -26,8 +26,8 @@ router.get('/balance', auth, async function (req, res, next) {
 });
 
 router.get('/transactions', auth, async function (req, res, next) {
-    const page_num = req.body.page_num || 1;
-    const page_length = req.body.page_length || 100;
+    const page_num = req.query.page_num || 1;
+    const page_length = req.query.page_length || 100;
     const transactions = await TransactionDAO.getTransactions(req.user.sub, page_num, page_length);
     res.send(transactions);
 });
