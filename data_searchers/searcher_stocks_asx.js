@@ -48,7 +48,7 @@ module.exports = {
         console.log("=======>Start update");
         await updateDatabase(formatedDate);
     }
-    // await updateOffline();
+    await updateOffline();
   }
 
   async function updateOffline(){

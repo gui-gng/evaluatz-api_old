@@ -13,9 +13,10 @@ const cors = require('cors');
  * IMPORTING ROUTES
  */
 const indexRouter = require('./routes/index');
-const authRouter =  require('./routes/auth');
+const stocksRouter = require('./routes/stocks');
+const authRouter = require('./routes/auth');
 const signupRouter = require('./routes/signup');
-const userRouter =  require('./routes/user');
+const userRouter = require('./routes/user');
 const projectRouter = require('./routes/project');
 const searchRouter = require('./routes/search');
 
@@ -33,7 +34,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -63,6 +63,7 @@ app.use(cors());
  * Add routes
  */
 app.use('/', indexRouter);
+app.use('/stocks', stocksRouter);
 app.use('/auth', authRouter);
 app.use('/signup', signupRouter);
 app.use('/user', userRouter);

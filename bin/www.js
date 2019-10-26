@@ -32,6 +32,7 @@ searchers.run(config_limit_request);
  */
 
 var port = normalizePort(process.env.PORT || '5000');
+console.log("Port: " + port);
 app.set('port', port);
 
 /**
