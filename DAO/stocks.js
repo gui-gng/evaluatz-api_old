@@ -70,29 +70,31 @@ async function insertHistoric(symbol, date, open, high, low, close, volume) {
 
 
 async function getStockNASDAQ(symbol, startDate, endDate) {
-    let sqlQuery = "SELECT company_name, symbol, industry FROM public.stocks WHERE symbol = $1;";
-    let values = [symbol];
-    let response = await db.execute(pool, sqlQuery, values);
-    let stock = response[0];
+    return new Promise(async (resolve) => {
+        let sqlQuery = "SELECT company_name, symbol, industry FROM public.stocks WHERE symbol = $1;";
+        let values = [symbol];
+        let response = await db.execute(pool, sqlQuery, values);
+        let stock = response[0];
 
-    const url = 'https://sandbox.tradier.com/v1/markets/history?' +
-        "symbol=" + symbol + "&" +
-        "interval=daily&" +
-        "start=" + startDate + "&" +
-        "end=" + endDate;
+        const url = 'https://sandbox.tradier.com/v1/markets/history?' +
+            "symbol=" + symbol + "&" +
+            "interval=daily&" +
+            "start=" + startDate + "&" +
+            "end=" + endDate;
 
-    const options = {
-        url,
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Bearer eOkJXLeAAMXUAxUprOd96TXdZsJP',
-        }
-    };
+        const options = {
+            url,
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer eOkJXLeAAMXUAxUprOd96TXdZsJP',
+            }
+        };
 
-    axios(options).then(response => {
-        stock['historic'] = response.data.history.day;
-        resolve(stock);
-    })
-        .catch(error => console.error(error));
+        axios(options).then(response => {
+            stock['historic'] = response.data.history.day;
+            resolve(stock);
+        })
+            .catch(error => console.error(error));
+    });
 }
