@@ -46,7 +46,7 @@ async function search(symbol) {
 
 async function getStockASX(symbol, startDate, endDate) {
     return new Promise(async (resolve) => {
-        let sqlQuery = "SELECT company_name, symbol, industry FROM public.stocks WHERE symbol = $1;";
+        let sqlQuery = "SELECT * FROM public.stocks WHERE symbol = $1;";
         let values = [symbol];
         let response = await db.execute(pool, sqlQuery, values);
         let stock = response[0];
@@ -71,7 +71,7 @@ async function insertHistoric(symbol, date, open, high, low, close, volume) {
 
 async function getStockNASDAQ(symbol, startDate, endDate) {
     return new Promise(async (resolve) => {
-        let sqlQuery = "SELECT company_name, symbol, industry FROM public.stocks WHERE symbol = $1;";
+        let sqlQuery = "SELECT * FROM public.stocks WHERE symbol = $1;";
         let values = [symbol];
         let response = await db.execute(pool, sqlQuery, values);
         let stock = response[0];
