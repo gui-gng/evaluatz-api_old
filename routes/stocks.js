@@ -17,4 +17,23 @@ router.get('/:source/:symbol', async function (req, res, next) {
 });
 
 
+router.get('/list', async function (req, res, next) {
+    try {
+        const stocks = await StocksDAO.getAllStocks();
+        res.send(stocks);
+    } catch (error) {
+        res.send(error);
+    }
+});
+
+
+router.get('/search/:symbol', async function (req, res, next) {
+    try {
+        const stocks = await StocksDAO.search(req.params.symbol);
+        res.send(stocks);
+    } catch (error) {
+        res.send(error);
+    }
+});
+
 module.exports = router;
