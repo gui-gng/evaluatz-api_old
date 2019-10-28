@@ -29,7 +29,7 @@ module.exports = {
 
 async function getAllStocks() {
     return new Promise(async (resolve) => {
-        let sqlQuery = "SELECT * FROM public.stocks";
+        let sqlQuery = "SELECT * FROM public.get_stocks_historic";
         let values = [];
         resolve(await db.execute(pool, sqlQuery, values));
     });
