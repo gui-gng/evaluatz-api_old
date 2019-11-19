@@ -21,6 +21,9 @@ module.exports = {
     insertHistoric: async (symbol, date, open, high, low, close, volume) => {
         return await insertHistoric(symbol, date, open, high, low, close, volume);
     },
+    insertHistoricJSON: async (json) => {
+        return await insertHistoricJSON(json);
+    },
     getAllStocks: async () => {
         return await getAllStocks();
     }
@@ -44,6 +47,25 @@ async function search(symbol) {
     });
 }
 
+async function insertHistoric(symbol, date, open, high, low, close, volume) {
+    return new Promise(async (resolve) => {
+        let sqlQuery = "INSERT INTO public.stocks_historic(symbol, date, open, high, low, close, volume) VALUES ($1, $2, $3, $4, $5, $6, $7);";
+        let values = [symbol, date, open, high, low, close, volume];
+        resolve(await db.execute(pool, sqlQuery, values));
+    });
+}
+
+
+async function insertHistoricJSON(json) {
+    return new Promise(async (resolve) => {
+        let sqlQuery = `with aux_json (doc) as (values ('${JSON.stringify(json)}'::json)) ` + 
+        "INSERT INTO public.stocks_historic (symbol, date, open, high, low, close, volume) " +
+        " select p.* from aux_json l cross join lateral json_populate_recordset(null::stocks_historic, doc) as p";
+        let values = [];
+        resolve(await db.execute(pool, sqlQuery, values));
+    });
+}
+
 async function getStockASX(symbol, startDate, endDate) {
     return new Promise(async (resolve) => {
         let sqlQuery = "SELECT * FROM public.stocks WHERE symbol = $1;";
@@ -60,13 +82,7 @@ async function getStockASX(symbol, startDate, endDate) {
     });
 }
 
-async function insertHistoric(symbol, date, open, high, low, close, volume) {
-    return new Promise(async (resolve) => {
-        let sqlQuery = "INSERT INTO public.stocks_historic(symbol, date, open, high, low, close, volume) VALUES ($1, $2, $3, $4, $5, $6, $7);";
-        let values = [symbol, date, open, high, low, close, volume];
-        resolve(await db.execute(pool, sqlQuery, values));
-    });
-}
+
 
 
 async function getStockNASDAQ(symbol, startDate, endDate) {

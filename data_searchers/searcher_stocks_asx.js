@@ -96,29 +96,37 @@ module.exports = {
   async function updateDatabase(formatedDate){
      let path = Path.resolve(__dirname, '../', 'storage', 'stocks_asx_historic', formatedDate);
      let listFiles = Fs.readdirSync(path);
-
-     for(let i = 0;i < listFiles.length;i++){
-         console.log("Readfile: " + listFiles[i]);
+    
+     for(let i = 0;i < listFiles.length;i++) {
+         console.log( "Readfile: " + listFiles[i]);
          let file = Fs.readFileSync(path + '/' + listFiles[i], "utf-8");
-        // console.log(file);
          let fileSplit = file.split("\r\n");
+         let values = [];
+
          for (let i = 0; i < fileSplit.length; i++) {
              let stock_csv_split = fileSplit[i].split(',');
              if (stock_csv_split.length == 7) {
-                 let values = [
-                     stock_csv_split[0],
-                     stock_csv_split[1].substr(0, 4) + "-" + stock_csv_split[1].substr(4, 2) + "-" + stock_csv_split[1].substr(6, 2),
-                     stock_csv_split[2],
-                     stock_csv_split[3],
-                     stock_csv_split[4],
-                     stock_csv_split[5],
-                     stock_csv_split[6],
-                 ];
-                // console.log(values);
-                 await stocks.insertHistoric(values[0], values[1], values[2], values[3], values[4], values[5], values[6]);
+                 values.push(
+                   {
+                     symbol: stock_csv_split[0], 
+                     date: stock_csv_split[1].substr(0, 4) + "-" + stock_csv_split[1].substr(4, 2) + "-" + stock_csv_split[1].substr(6, 2), 
+                     open: stock_csv_split[2], 
+                     high: stock_csv_split[3], 
+                     low: stock_csv_split[4], 
+                     close: stock_csv_split[5], 
+                     volume: stock_csv_split[6]
+                    });
+                
              }
          }
+         await stocks.insertHistoricJSON(values);
+         console.log(new Date() + " - Finished: " + listFiles[i] + " Inserted: " + values.length);
+
      }
+
+   
+
+
   }
 
 
