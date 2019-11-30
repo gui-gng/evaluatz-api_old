@@ -5,16 +5,17 @@ const axios = require('axios');
 
 
 module.exports = {
-    getStock: async (source, symbol, startDate, endDate) => {
+    getStock: async (source, symbol, startDate, endDate, just_values) => {
         switch (source) {
             case 'ASX':
-                return await getStockASX(symbol, startDate, endDate);
+                return await getStockASX(symbol, startDate, endDate,just_values);
             case 'NASDAQ':
-                return await getStockNASDAQ(symbol, startDate, endDate);
+                return await getStockNASDAQ(symbol, startDate, endDate, just_values);
             default:
                 return { Error: "Source unavailable" }
         }
     },
+    
     search: async (symbol) => {
         return await search(symbol);
     },
@@ -66,33 +67,37 @@ async function insertHistoricJSON(json) {
     });
 }
 
-async function getStockASX(symbol, startDate, endDate) {
+async function getStockASX(symbol, startDate, endDate, just_values) {
     return new Promise(async (resolve) => {
-        let sqlQuery = "SELECT * FROM public.stocks WHERE symbol = $1;";
-        let values = [symbol];
-        let response = await db.execute(pool, sqlQuery, values);
-        let stock = response[0];
-
-        sqlQuery = "SELECT symbol, date, open, high, low, close, volume FROM public.stocks_historic";
-        sqlQuery += " WHERE symbol = $1 AND date >= $2 AND date <= $3 ORDER BY date;";
-        values = [symbol, startDate, endDate];
-        stock['historic'] = await db.execute(pool, sqlQuery, values);
-        // console.log(stock);
-        resolve(stock);
+        if(just_values){
+            let sqlQuery = "SELECT symbol, date, open, high, low, close, volume FROM public.stocks_historic";
+            sqlQuery += " WHERE symbol = $1 AND date >= $2 AND date <= $3 ORDER BY date;";
+            let values = [symbol, startDate, endDate];
+            let hist = await db.execute(pool, sqlQuery, values);
+            resolve(hist);
+        }else{
+            let sqlQuery = "SELECT * FROM public.stocks WHERE symbol = $1;";
+            let values = [symbol];
+            let response = await db.execute(pool, sqlQuery, values);
+            let stock = response[0];
+    
+            sqlQuery = "SELECT symbol, date, open, high, low, close, volume FROM public.stocks_historic";
+            sqlQuery += " WHERE symbol = $1 AND date >= $2 AND date <= $3 ORDER BY date;";
+            values = [symbol, startDate, endDate];
+            stock['historic'] = await db.execute(pool, sqlQuery, values);
+            resolve(stock);
+        }
+     
     });
 }
 
 
 
 
-async function getStockNASDAQ(symbol, startDate, endDate) {
+async function getStockNASDAQ(symbol, startDate, endDate, just_values) {
     return new Promise(async (resolve) => {
-        let sqlQuery = "SELECT * FROM public.stocks WHERE symbol = $1;";
-        let values = [symbol];
-        let response = await db.execute(pool, sqlQuery, values);
-        let stock = response[0];
-
-        const url = 'https://sandbox.tradier.com/v1/markets/history?' +
+        if(just_values){
+            const url = 'https://sandbox.tradier.com/v1/markets/history?' +
             "symbol=" + symbol + "&" +
             "interval=daily&" +
             "start=" + startDate + "&" +
@@ -108,9 +113,36 @@ async function getStockNASDAQ(symbol, startDate, endDate) {
         };
 
         axios(options).then(response => {
-            stock['historic'] = response.data.history.day;
-            resolve(stock);
+            resolve(response.data.history.day);
         })
             .catch(error => console.error(error));
+        }else{
+            let sqlQuery = "SELECT * FROM public.stocks WHERE symbol = $1;";
+            let values = [symbol];
+            let response = await db.execute(pool, sqlQuery, values);
+            let stock = response[0];
+    
+            const url = 'https://sandbox.tradier.com/v1/markets/history?' +
+                "symbol=" + symbol + "&" +
+                "interval=daily&" +
+                "start=" + startDate + "&" +
+                "end=" + endDate;
+    
+            const options = {
+                url,
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer eOkJXLeAAMXUAxUprOd96TXdZsJP',
+                }
+            };
+    
+            axios(options).then(response => {
+                stock['historic'] = response.data.history.day;
+                resolve(stock);
+            })
+                .catch(error => console.error(error));
+        }
+       
     });
 }
