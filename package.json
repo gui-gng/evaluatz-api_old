@@ -28,7 +28,7 @@
     "google-images": "2.1.0",
     "googleapis": "^43.0.0",
     "http-errors": "~1.6.2",
-    "jsonwebtoken": "8.5.1",
+    "jsonwebtoken": "9.0.0",
     "morgan": "~1.9.0",
     "pg": "7.10.0",
     "puppeteer": "^1.20.0",
